@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		table, td {
+  			border: 1px solid;
+  			border-collapse: collapse;
+		}
+		td{
+		  
+		  width: 90px;
+		  height: 20px;
+		}
+	</style>
+</head>
+<body>
+	<script>
+
+document.cookie = 'city = moscow';
+document.cookie = 'name = Dima';
+document.cookie = 'car = bmw';
+
+var cookies = document.cookie.split(";").slice(0);
+
+
+//Создание таблицы
+
+var table = document.createElement('table')
+table.classList.add('mainTable')
+
+for(var i = 0; i < cookies.length; i++){
+	var tr = document.createElement('tr')
+
+  	for(var b = 0; b < 2; b++){
+  		var td = document.createElement('td')
+  			tr.appendChild(td)
+  	}
+    table.appendChild(tr)
+}
+
+document.body.appendChild(table);
+
+var count = table.rows
+
+//назначение классов для ячеек td
+
+for (var n = 0; n < count.length; n++){
+	count[n].cells[0].classList.add('name');
+
+}
+
+for (var n = 0; n < count.length; n++){
+	count[n].cells[1].classList.add('value');
+	var btn = document.createElement('button');
+  btn.innerHTML = 'удалить'
+  count[n].appendChild(btn)
+  btn.classList.add('remove')
+}
+
+
+
+//////////////////////////////////
+///куки
+//////////////////////////////////
+
+
+var namee = document.querySelectorAll('.name');
+var value = document.querySelectorAll('.value');
+
+
+
+for(var i=0; i<cookies.length; i++) {
+ 	 	var parts = cookies[i].split("="),
+    	cookieName = parts[0], 
+    	cookieValue = parts[1];
+    	
+    	namee[i].textContent = cookieName;
+    	value[i].textContent = cookieValue;
+      
+}
+
+       
+
+
+//////////////////////
+///Создание функции, которая будет удалять строку
+//////////////////////
+
+
+var mainTable = document.querySelector('.mainTable') //переменная для обработчика
+
+function deleteCookies(e){
+	var inner = e.target.previousSibling.previousSibling.textContent
+  var parent = e.target.parentNode  //tr
+  console.log(parent)
+  
+  
+  if(confirm('Удалить куку ' + inner + ' ?'))
+  {
+  	 mainTable.removeChild(parent) //удалить tr из table
+  }
+}
+
+
+var removeClass = document.querySelectorAll('.remove');
+
+for(var i = 0; i < removeClass.length; i++){
+	removeClass[i].onclick = deleteCookies
+}
+</script>
+</body>
+</html>
